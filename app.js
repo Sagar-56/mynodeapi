@@ -37,32 +37,32 @@ MongoClient.connect(mongoUrl,(err,client) => {
 //        res.send(result);
 //  })
 // })
-// app.get('/productData/', (req,res) => {
-//     // let id = req.params.id;
-//     let id = req.query.id;
-//     console.log(">>>>id",id);
-//     db.collection('productData').find().toArray((err,result) => {
-//        if(err) throw err;
-//        res.send(result);
-//  })
-// // })
-// app.get('/productDetails', (req,res) => {
-//     let query = {};
-//     let stateId = Number(req.query.State_id);
-//     let pId = Number(req.query.p_id);
-//     let productId = Number(req.query.Product_id);
-//     if(stateId){
-//         query = {State_id:stateId};
-//     }else if(pId){
-//         query = {'package_size.p_id':pId};
-//     }else if(productId){
-//         query = {Product_id:productId}
-//     }
-//     db.collection('productDetails').find(query).toArray((err,result) => {
-//        if(err) throw err;
-//        res.send(result);
-//  })
+app.get('/productData/', (req,res) => {
+    // let id = req.params.id;
+    let id = req.query.id;
+    console.log(">>>>id",id);
+    db.collection('productData').find().toArray((err,result) => {
+       if(err) throw err;
+       res.send(result);
+ })
 // })
+app.get('/productDetails', (req,res) => {
+    let query = {};
+    let stateId = Number(req.query.State_id);
+    let pId = Number(req.query.p_id);
+    let productId = Number(req.query.Product_id);
+    if(stateId){
+        query = {State_id:stateId};
+    }else if(pId){
+        query = {'package_size.p_id':pId};
+    }else if(productId){
+        query = {Product_id:productId}
+    }
+    db.collection('productDetails').find(query).toArray((err,result) => {
+       if(err) throw err;
+       res.send(result);
+ })
+})
 
 //delete Data
 
