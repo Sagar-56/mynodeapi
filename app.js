@@ -2,12 +2,10 @@ let express = require('express');
 let app = express();
 const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
-// const mongoUrl = "mongodb://localhost:23476"
 const dotenv = require('dotenv')
 dotenv.config()
 let port = process.env.PORT || 4356;
 const mongoUrl = "mongodb+srv://Sagarbehera:Sagar456@cluster0.96hmj.mongodb.net/eduInternJan?retryWrites=true&w=majority";
-
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
@@ -28,14 +26,14 @@ MongoClient.connect(mongoUrl,(err,client) => {
     })
 })
 
-// app.get('/productData/:id', (req,res) => {
-//     let id = req.params.id;
-//     console.log(">>>>id",id);
-//     db.collection('productData').find().toArray((err,result) => {
-//        if(err) throw err;
-//        res.send(result);
-//  })
-// })
+app.get('/productData/:id', (req,res) => {
+    let id = req.params.id;
+    console.log(">>>>id",id);
+    db.collection('productData').find().toArray((err,result) => {
+       if(err) throw err;
+       res.send(result);
+ })
+})
 app.get('/productData/', (req,res) => {
     // let id = req.params.id;
     let id = req.query.id;
@@ -44,7 +42,7 @@ app.get('/productData/', (req,res) => {
        if(err) throw err;
        res.send(result);
  })
-// })
+})
 app.get('/productDetails', (req,res) => {
     let query = {};
     let stateId = Number(req.query.State_id);
@@ -152,11 +150,4 @@ let productId = mongo.ObjectId(req.params.id)
        res.send(result);
  })
 })
-
-// app.get('/productdetails',(req,res) => {
-//     db.collection('productDetails').find().toArray((err,result) => {
-//         if(err) throw err;
-//         res.send(result);
-//     })
-// })
     
