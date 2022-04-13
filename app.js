@@ -4,9 +4,8 @@ const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
 const dotenv = require('dotenv')
 dotenv.config()
-let port = 4356;
-const mongoUrl = "mongodb://localhost:27017";
-const mongoLiveUrl = "mongodb+srv://Sagarbehera:Sagar456@cluster0.96hmj.mongodb.net/eduInternJan?retryWrites=true&w=majority";
+let port = process.env.PORT || 4356;
+const mongoUrl = "mongodb+srv://Sagarbehera:Sagar456@cluster0.96hmj.mongodb.net/eduInternJan?retryWrites=true&w=majority";
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
@@ -62,34 +61,7 @@ app.get('/productDetails', (req,res) => {
  })
 })
 
-//delete Data
-
-// db.orders.remove({'_id':"6255331d2afe184ceb6f7145"})
-// db.orders.remove({"phone":7077371197})
-
-//Update
-
-// db.orders.updateOne(
-//     {_id:"6255345232f4f1a37bd9678b"},
-//     {
-//         $set:{
-//             "status":"Delivered",
-//             "bank": "SBI"
-//         }
-//     }
-// )
-// db.orders.updateOne(
-//     {_id:"6255345232f4f1a37bd9678b"},
-//     {
-//         $unset:{
-//             "meniItem":""
-//         }
-//     }
-// )
-
-
 //bank update
-
 app.put('/bankUpdate/:id', (req,res) => {
     let oId = mongo.ObjectId(req.params.id);
     db.collection('orders').updateOne(
