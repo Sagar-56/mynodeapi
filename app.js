@@ -63,7 +63,30 @@ app.get('/productDetails', (req,res) => {
  })
 })
 
+//delete Data
 
+// db.orders.remove({'_id':"6255331d2afe184ceb6f7145"})
+// db.orders.remove({"phone":7077371197})
+
+//Update
+
+// db.orders.updateOne(
+//     {_id:"6255345232f4f1a37bd9678b"},
+//     {
+//         $set:{
+//             "status":"Delivered",
+//             "bank": "SBI"
+//         }
+//     }
+// )
+// db.orders.updateOne(
+//     {_id:"6255345232f4f1a37bd9678b"},
+//     {
+//         $unset:{
+//             "meniItem":""
+//         }
+//     }
+// )
 
 
 //bank update
@@ -120,3 +143,20 @@ if(Array.isArray(req.body)){
     res.send('Invalid Input')
 }
 })
+
+app.get('/productDetails/:id', (req,res) => {
+//    let productId = Number(req.params.id)
+let productId = mongo.ObjectId(req.params.id)
+    db.collection('productDetails').find({_id:productId}).toArray((err,result) => {
+       if(err) throw err;
+       res.send(result);
+ })
+})
+
+// app.get('/productdetails',(req,res) => {
+//     db.collection('productDetails').find().toArray((err,result) => {
+//         if(err) throw err;
+//         res.send(result);
+//     })
+// })
+    
