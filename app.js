@@ -26,14 +26,6 @@ MongoClient.connect(mongoUrl,(err,client) => {
     })
 })
 
-app.get('/productData/:id', (req,res) => {
-    let id = req.params.id;
-    console.log(">>>>id",id);
-    db.collection('productData').find().toArray((err,result) => {
-       if(err) throw err;
-       res.send(result);
- })
-})
 app.get('/productData/', (req,res) => {
     // let id = req.params.id;
     let id = req.query.id;
@@ -61,35 +53,6 @@ app.get('/productDetails', (req,res) => {
  })
 })
 
-//bank update
-app.put('/bankUpdate/:id', (req,res) => {
-    let oId = mongo.ObjectId(req.params.id);
-    db.collection('orders').updateOne(
-        {_id:oId},
-        {
-            $set:{
-                "status":req.body.status,
-                "bank_name":req.body.bankName
-            }},(err,result) => {
-            if(err) throw err;
-           res.send(`status updated to ${req.body.status}`)
-        })
-})
-
-app.delete('/deleteOrders', (req,res) => {
-    db.collection('orders').remove({},(err,result) => {
-        res.send('Orders Deleted')
-    })
-})
-
-
-
-app.post('/placeOrder', (req,res) => {
-    db.collection('orders').insert(req.body,(err,result) => {
-        if(err) throw err;
-        res.send('orderPlaced')
-    })
-})
 
 app.get('/viewOrder', (req,res) => {
     let query= {};
@@ -115,12 +78,4 @@ if(Array.isArray(req.body)){
 }
 })
 
-app.get('/productDetails/:id', (req,res) => {
-//    let productId = Number(req.params.id)
-let productId = mongo.ObjectId(req.params.id)
-    db.collection('productDetails').find({_id:productId}).toArray((err,result) => {
-       if(err) throw err;
-       res.send(result);
- })
-})
     
