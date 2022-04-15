@@ -57,7 +57,7 @@ app.get('/productDetails', (req,res) => {
 app.get('/price', (req,res) => {
     db.collection('price').find().toArray()((err,result) =>{
         if(err) throw err;
-        console.log(result);
+        res.send(result);
     })
 })
 
@@ -73,7 +73,7 @@ app.get('/productLists', (req,res) => {
     }
     db.collection('productLists').find(query).toArray((err,result) => {
         if(err) throw err;
-        console.log(result);
+        res.send(result);
     })
 })
 
