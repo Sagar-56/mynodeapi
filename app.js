@@ -55,7 +55,7 @@ app.get('/productDetails', (req,res) => {
 
 
 app.get('/price', (req,res) => {
-    db.collection('price').find().toArray()((err,result) =>{
+    db.collection('price').find().toArray((err,result) =>{
         if(err) throw err;
         res.send(result);
     })
