@@ -105,7 +105,7 @@ app.post('/placeOrder', (req,res) => {
 
 app.get('/viewOrder', (req,res) => {
     let query= {};
-     let email = req.query.email;
+    let email = req.query.email;
      if(email){
          query = {'email':email}
      }
