@@ -5,7 +5,6 @@ const MongoClient = mongo.MongoClient;
 const dotenv = require('dotenv')
 dotenv.config()
 let port = process.env.PORT || 4356;
-// const mongoUrl = "mongodb://localhost:27017";
 const mongoUrl = "mongodb+srv://Sagarbehera:Sagar456@cluster0.96hmj.mongodb.net/eduInternJan?retryWrites=true&w=majority";
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -19,19 +18,19 @@ app.get('/', (req,res) => {
     res.send("Let's Express")
 })
 
-MongoClient.connect(mongoUrl,(err,client) => {
+MongoClient.connect(mongoUrl, (err, client) => {
     if(err) console.log(`Error While Connecting`);
     db = client.db('eduInternJan');
-    app.listen(port, () => {
+    app.listen(port,() => {
         console.log(`server is running on port ${port}`)
     })
 })
 
-app.get('/productData/', (req,res) => {
-    // let id = req.params.id;
+app.get('/productData', (req,res) => {
+    let query = {};
     let id = req.query.id;
-    console.log(">>>>id",id);
-    db.collection('productData').find().toArray((err,result) => {
+    console.log(`id is ${id}`);
+    db.collection('productData').find(query).toArray((err,result) => {
        if(err) throw err;
        res.send(result);
  })
@@ -52,6 +51,55 @@ app.get('/productDetails', (req,res) => {
        if(err) throw err;
        res.send(result);
  })
+})
+
+
+app.get('/price', (req,res) => {
+    db.collection('price').find().toArray()((err,result) =>{
+        if(err) throw err;
+        console.log(result);
+    })
+})
+
+app.get('/productLists', (req,res) => {
+    let query = {};
+    let stateId =  Number(req.query.State_id);
+    let categoryId = Number(req.query.Category_id);
+    if(stateId){
+        query ={State_id:stateId}
+    }
+    if(categoryId){
+        query = {Category_id:categoryId}
+    }
+    db.collection('productLists').find(query).toArray((err,result) => {
+        if(err) throw err;
+        console.log(result);
+    })
+})
+
+
+// bank update
+
+app.put('/bankUpdate/:id', (req,res) => {
+    let oId = mongo.ObjectId(req.params.id);
+    db.collection('orders').updateOne(
+        {_id:oId},
+        {
+            $set:{
+                "status":req.body.status,
+                "bank_name":req.body.bankName
+            }},(err,result) => {
+            if(err) throw err;
+           res.send(`status updated to ${req.body.status}`)
+        })
+})
+
+
+app.post('/placeOrder', (req,res) => {
+    db.collection('orders').insert(req.body,(err,result) => {
+        if(err) throw err;
+        res.send('orderPlaced')
+    })
 })
 
 
@@ -78,5 +126,7 @@ if(Array.isArray(req.body)){
     res.send('Invalid Input')
 }
 })
+
+
 
     
