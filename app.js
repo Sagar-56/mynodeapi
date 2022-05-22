@@ -2,8 +2,8 @@ let express = require('express');
 let app = express();
 const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
-const dotenv = require('dotenv')
-dotenv.config()
+const dotenv = require('dotenv');
+dotenv.config(); 
 let port = process.env.PORT || 4356;
 const mongoUrl = "mongodb+srv://Sagarbehera:Sagar456@cluster0.96hmj.mongodb.net/eduInternJan?retryWrites=true&w=majority";
 const bodyParser = require('body-parser');
@@ -48,6 +48,72 @@ app.get('/productDetails', (req,res) => {
         query = {Product_id:productId}
     }
     db.collection('productDetails').find(query).toArray((err,result) => {
+       if(err) throw err;
+       res.send(result);
+ })
+})
+
+
+app.get('/cashbackdetails', (req,res) => {
+    let query = {};
+    let stateId = Number(req.query.state_id);
+    let cashbackId = Number(req.query.cashback_id);
+    if(stateId){
+        query = {state_id:stateId};
+    }
+    else if(cashbackId){
+        query = {cashback_id:cashbackId}
+    }
+    db.collection('cashbackdetails').find(query).toArray((err,result) => {
+       if(err) throw err;
+       res.send(result);
+ })
+})
+
+
+app.get('/dealsdata', (req,res) => {
+    let query = {};
+    let stateId = Number(req.query.state_id);
+    let dealsId = Number(req.query.deals_id);
+    if(stateId){
+        query = {state_id:stateId};
+    }
+    else if(dealsId){
+        query = {deals_id:dealsId}
+    }
+    db.collection('dealsdata').find(query).toArray((err,result) => {
+       if(err) throw err;
+       res.send(result);
+ })
+})
+
+app.get('/feature', (req,res) => {
+    let query = {};
+    let stateId = Number(req.query.state_id);
+    let featureId = Number(req.query.feature_id);
+    if(stateId){
+        query = {state_id:stateId};
+    }
+    else if(featureId){
+        query = {feature_id:featureId}
+    }
+    db.collection('feature').find(query).toArray((err,result) => {
+       if(err) throw err;
+       res.send(result);
+ })
+})
+
+
+app.get('/healthArticle', (req,res) => {
+    let query = {};
+    let stateId = Number(req.query.state_id);
+    let healthId = Number(req.query.health_id);
+    if(stateId){
+        query = {state_id:stateId};
+    }else if(healthId){
+        query = {health_id:healthId};
+    }
+    db.collection('healthArticle').find(query).toArray((err,result) => {
        if(err) throw err;
        res.send(result);
  })
